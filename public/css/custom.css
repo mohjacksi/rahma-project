@@ -1,3 +1,23 @@
+/********************************* Fonts *********************************
+***********************************************************************************
+***********************************************************************************/
+@font-face {
+    font-family: "ElMessiri-Medium";
+    src: url("../webfonts/El_Messiri/ElMessiri-Medium.ttf");
+  }
+  @font-face {
+    font-family: "ElMessiri-Bold";
+    src: url("../webfonts/El_Messiri/ElMessiri-Bold.ttf");
+  }
+  @font-face {
+    font-family: "ElMessiri-bold";
+    src: url("../webfonts/El_Messiri/ElMessiri-Bold.ttf");
+  }
+  @font-face {
+    font-family: "Cairo-Medium";
+    src: url("../webfonts/cairo/Cairo-Medium.ttf");
+  }
+
 .ck-editor__editable,
 textarea {
     min-height: 150px;
@@ -129,4 +149,30 @@ table.dataTable thead .sorting_desc {
 
 .custom-select.form-control-sm {
     padding: 0.25rem 1.5rem;
+}
+
+
+.c-sidebar{
+    background: #3c6456;
+}
+.c-sidebar .c-sidebar-nav-dropdown-toggle:hover, .c-sidebar .c-sidebar-nav-link:hover{
+    background: #63a18b;
+
+}
+
+
+a,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div,
+button,
+th,
+td,
+label{
+    font-family: "Cairo-Medium", "ElMessiri-Regular", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
 }

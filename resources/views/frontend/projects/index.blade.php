@@ -1,200 +1,131 @@
 @extends('layouts.frontend')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            @can('project_create')
-                <div style="margin-bottom: 10px;" class="row">
-                    <div class="col-lg-12">
-                        <a class="btn btn-success" href="{{ route('frontend.projects.create') }}">
-                            {{ trans('global.add') }} {{ trans('cruds.project.title_singular') }}
-                        </a>
-                    </div>
-                </div>
-            @endcan
-            <div class="card">
-                <div class="card-header">
-                    {{ trans('cruds.project.title_singular') }} {{ trans('global.list') }}
-                </div>
-
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class=" table table-bordered table-striped table-hover datatable datatable-Project">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.project.fields.id') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.project.fields.name') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.project.fields.short_description') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.project.fields.value') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.project.fields.paid') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.project.fields.remain') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.project.fields.donors') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.project.fields.youtube') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.project.fields.images') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.project.fields.category') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.project.fields.reference') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.project.fields.beneficiary') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.project.fields.hide') }}
-                                    </th>
-                                    <th>
-                                        &nbsp;
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($projects as $key => $project)
-                                    <tr data-entry-id="{{ $project->id }}">
-                                        <td>
-                                            {{ $project->id ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $project->name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $project->short_description ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $project->value ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $project->paid ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $project->remain ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $project->donors ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $project->youtube ?? '' }}
-                                        </td>
-                                        <td>
-                                            @foreach($project->images as $key => $media)
-                                                <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
-                                                    <img src="{{ $media->getUrl('thumb') }}">
-                                                </a>
-                                            @endforeach
-                                        </td>
-                                        <td>
-                                            {{ $project->category->name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $project->reference ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $project->beneficiary ?? '' }}
-                                        </td>
-                                        <td>
-                                            <span style="display:none">{{ $project->hide ?? '' }}</span>
-                                            <input type="checkbox" disabled="disabled" {{ $project->hide ? 'checked' : '' }}>
-                                        </td>
-                                        <td>
-                                            @can('project_show')
-                                                <a class="btn btn-xs btn-primary" href="{{ route('frontend.projects.show', $project->id) }}">
-                                                    {{ trans('global.view') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('project_edit')
-                                                <a class="btn btn-xs btn-info" href="{{ route('frontend.projects.edit', $project->id) }}">
-                                                    {{ trans('global.edit') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('project_delete')
-                                                <form action="{{ route('frontend.projects.destroy', $project->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                                </form>
-                                            @endcan
-
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
+    <!-- Header -->
+    <section class="top-banner">
+        <div class="overlay">
+            <ol class="breadcrumb custom-breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('frontend.home') }}">الرئيسية</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('frontend.projects.index') }}">المشاريع</a></li>
+            </ol>
         </div>
-    </div>
-</div>
-@endsection
-@section('scripts')
-@parent
-<script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('project_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('frontend.projects.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
+    </section>
+    <!-- End Header -->
+    <!-- Donation projects -->
+    <section class="donation-projects project py">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-lg-auto col-12">
+                    <h3 class="custom-head">
 
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
+                        كل
 
-        return
-      }
+                        <span> المشاريع </span>
+                    </h3>
+                </div>
+                <div class="col-lg-3 col-12 ms-auto">
+                    <select name="project-select" id="project-select" class="form-select">
+                        <option value="0">الكل</option>
 
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-@endcan
+                        @forelse ($categories as $category)
+                            <option value="{{ $category->id }}"
+                                {{ request()->category == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}</option>
+                        @empty
+                            <p>لا توجد مشاريع </p>
+                        @endforelse
+                    </select>
+                </div>
+                <div class="col-12">
+                    <div class="project-wrapper">
+                        <div class="project-items tab-content">
+                            <div class="row">
+                                @forelse ($projects as $key => $project)
+                                    @php
+                                        $prec = ($project->paid / $project->value) * 100;
+                                    @endphp
 
-  $.extend(true, $.fn.dataTable.defaults, {
-    orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
-    pageLength: 100,
-  });
-  let table = $('.datatable-Project:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
-  
-})
+                                    <div class="col-lg-4 col-md-6 col-12">
+                                        <div class="card custom-card">
+                                            <img src="{{ $project->images->first()->getUrl() }}" class="card-img-top"
+                                                alt="{{ $project->name }}">
+                                            <div class="card-body">
+                                                <a href="{{ route('frontend.projects.show', $project->id) }}">
+                                                    <h5 class="card-title">
+                                                        {{ $project->name }}
+                                                    </h5>
+                                                </a>
+                                                <div class="progress">
+                                                    <div class="progress-bar" role="progressbar"
+                                                        style="width: {{ $prec }}%;" aria-valuemin="0"
+                                                        aria-valuemax="100">
+                                                        <span
+                                                            style="right: calc({{ $prec }}% - 23px);">{{ $prec }}%</span>
+                                                    </div>
+                                                </div>
 
-</script>
+                                                <div class="card-details">
+                                                    <div class="card-details-item">
+                                                        <span>قيمة المشروع </span>
+                                                        <span>{{ $project->value }}</span>
+                                                    </div>
+                                                    <div class="card-details-item">
+                                                        <span> المدفوع </span>
+                                                        <span>{{ $project->paid }}</span>
+                                                    </div>
+                                                    <div class="card-details-item">
+                                                        <span> المتبقى </span>
+                                                        <span>{{ $project->remain }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="custom-card-donation">
+                                                    <label for="donation55">قم بإدخال التبرع </label>
+                                                    <form method="post" class="d-flex custom-g-form">
+                                                        <input class="form-control me-2 " name="number-of-donation"
+                                                            type="number" placeholder="0 " id="donation55">
+                                                        <button class="btn btn-outline-success" type="submit">
+                                                            د.ع
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary qu-btn">التبرع السريع
+                                            </button>
+
+
+                                        </div>
+                                    </div>
+                                @empty
+                                    <p>لا توجد مشاريع </p>
+                                @endforelse
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    {{ $projects->withQueryString()->links() }}
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- End Donation projects -->
+    <script>
+        let elmSelect = document.getElementById('project-select');
+
+        if (!!elmSelect) {
+            elmSelect.addEventListener('change', e => {
+                let choice = e.target.value;
+                if (!choice) return;
+
+                let url = new URL(window.location.href);
+                url.searchParams.set('category', choice);
+                url.searchParams.delete('page');
+                if(choice == '0')
+                    url.searchParams.delete('category');
+
+                console.log(url);
+                window.location.href = url; // reloads the page
+            });
+        }
+    </script>
 @endsection

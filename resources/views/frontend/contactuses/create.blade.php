@@ -1,68 +1,130 @@
 @extends('layouts.frontend')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
+    <!-- Header -->
+    <section class="top-banner">
+        <div class="overlay">
+            <ol class="breadcrumb custom-breadcrumb">
+                <li class="breadcrumb-item"><a href="/"> الرئيسية </a></li>
 
-            <div class="card">
-                <div class="card-header">
-                    {{ trans('global.create') }} {{ trans('cruds.contactUs.title_singular') }}
-                </div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route("frontend.contactuses.store") }}" enctype="multipart/form-data">
-                        @method('POST')
-                        @csrf
-                        <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.contactUs.fields.name') }}</label>
-                            <input class="form-control" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
-                            @if($errors->has('name'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('name') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.contactUs.fields.name_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label class="required" for="email">{{ trans('cruds.contactUs.fields.email') }}</label>
-                            <input class="form-control" type="text" name="email" id="email" value="{{ old('email', '') }}" required>
-                            @if($errors->has('email'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('email') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.contactUs.fields.email_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label class="required" for="phone">{{ trans('cruds.contactUs.fields.phone') }}</label>
-                            <input class="form-control" type="text" name="phone" id="phone" value="{{ old('phone', '') }}" required>
-                            @if($errors->has('phone'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('phone') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.contactUs.fields.phone_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label class="required" for="details">{{ trans('cruds.contactUs.fields.details') }}</label>
-                            <textarea class="form-control" name="details" id="details" required>{{ old('details') }}</textarea>
-                            @if($errors->has('details'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('details') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.contactUs.fields.details_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-danger" type="submit">
-                                {{ trans('global.save') }}
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
+                <li class="breadcrumb-item"><a href="/contact-us"> اتصل بنا </a></li>
+            </ol>
         </div>
-    </div>
-</div>
+    </section>
+    <!-- End Header -->
+
+    <!-- contact-us-section  -->
+    <section class="project-item contact-us-section py">
+        <div class="container">
+
+            <div class="contact-area">
+
+                <div class="donation-projects text-center">
+
+                    <h3 class="custom-head">
+
+                        أتصل
+
+                        <span> بنا </span>
+                    </h3>
+
+                </div>
+                <div class="row justify-content-between">
+
+                    <div class="col-12 col-lg-8 mb-5 mb-lg-0">
+
+                        <div class="contact-form-area">
+
+                            <h4>يسعدنا تواصلك معنا . </h4>
+                            @if (Session::has('done'))
+                            <p>
+                            تم إرسال رسالتك بنجاح
+                            </p>
+                            @endif
+                            <form class="contact-form" method="POST" action="{{ route('frontend.contact-us.store') }}"
+                                enctype="multipart/form-data">
+                                @method('POST')
+                                @csrf
+                                <div class="item user">
+                                    <input type="text" name="name" id="name" class="form-control" placeholder="الإسم">
+                                    @if ($errors->has('name'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('name') }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="item phone">
+                                    <input type="tel" class="form-control" placeholder="رقم التليفون" name="phone"
+                                        id="phone" value="{{ old('phone', '') }}" required>
+                                    @if ($errors->has('phone'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('phone') }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="item email">
+                                    <input class="form-control" type="text" name="email" id="email" class="form-control"
+                                        placeholder="البريد الإلكترونى" value="{{ old('email', '') }}" required>
+
+                                    @if ($errors->has('email'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('email') }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="item massage">
+                                    <textarea class="form-control" name="details" id="details" placeholder="الرسالة.."
+                                        required>{{ old('details') }}</textarea>
+                                    @if ($errors->has('details'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('details') }}
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <button class="submit btn custom-btn" type="submit">تواصل الان</button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-lg-3">
+
+
+                        <div class="contact-info-area">
+
+                            <div class="info-items">
+
+                                <div class="info-item">
+
+                                    <h4 class="item-title">تواصل معنا</h4>
+                                    <p class="bold tel">⁦+964 750 212 0570</p>
+                                    <h6><a href="mailto:info@rahma.com">info@rahma.com</a></h6>
+
+                                </div>
+                                <div class="info-item">
+
+                                    <h4 class="item-title">العنوان</h4>
+                                    <p>بغداد، حي الجامعة</p>
+
+                                </div>
+                                <div class="info-item">
+
+                                    <h4 class="item-title">أيام العمل</h4>
+                                    <p> السبت - الخميس : 6AM - 6PM <br>مغلق في عطلات الرسمية</p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- End contact-us-section -->
 @endsection

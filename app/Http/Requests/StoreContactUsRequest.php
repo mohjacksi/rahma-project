@@ -11,7 +11,7 @@ class StoreContactUsRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('contact_us_create');
+        return true; //Gate::allows('contact_us_create');;
     }
 
     public function rules()
@@ -23,6 +23,7 @@ class StoreContactUsRequest extends FormRequest
             ],
             'email' => [
                 'string',
+                'email',
                 'required',
             ],
             'phone' => [

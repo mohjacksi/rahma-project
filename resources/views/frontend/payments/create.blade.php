@@ -54,7 +54,7 @@
                         </div>
                         <div class="form-group">
                             <label for="donor">{{ trans('cruds.payment.fields.donor') }}</label>
-                            <input class="form-control" type="text" name="donor" id="donor" value="{{ old('donor', '') }}">
+                            {{-- <input class="form-control" type="text" name="donor" id="donor" value="{{ old('donor', '') }}"> --}}
                             @if($errors->has('donor'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('donor') }}
@@ -64,7 +64,7 @@
                         </div>
                         <div class="form-group">
                             <label for="phone_number">{{ trans('cruds.payment.fields.phone_number') }}</label>
-                            <input class="form-control" type="text" name="phone_number" id="phone_number" value="{{ old('phone_number', '') }}">
+                            {{-- <input class="form-control" type="text" name="phone_number" id="phone_number" value="{{ old('phone_number', '') }}"> --}}
                             @if($errors->has('phone_number'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('phone_number') }}

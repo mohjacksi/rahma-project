@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPaymentRequest;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
+use App\Models\Bank;
 use App\Models\Payment;
 use App\Models\Project;
 use Gate;
@@ -20,7 +21,13 @@ class PaymentController extends Controller
 
         $payments = Payment::with(['project'])->get();
 
-        return view('frontend.payments.index', compact('payments'));
+        $banks = Bank::all();
+
+        $project = Project::find(request()->project);
+
+        $amount = request()->amount;
+
+        return view('frontend.payments.index', compact('payments','banks','project', 'amount'));
     }
 
     public function create()

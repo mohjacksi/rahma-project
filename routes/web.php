@@ -1,6 +1,6 @@
 <?php
 
-Route::view('/', 'welcome');
+// Route::view('/', 'welcome');
 Auth::routes(['register' => false]);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function () {
@@ -52,8 +52,9 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
         Route::post('profile/destroy', 'ChangePasswordController@destroy')->name('password.destroyProfile');
     }
 });
-Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['auth']], function () {
-    Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['as' => 'frontend.', 'namespace' => 'Frontend'], function () {
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/about-us', 'AboutUsController@index')->name('about-us');
 
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -72,9 +73,6 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::resource('donation-categories', 'DonationCategoryController');
 
     // Project
-    Route::delete('projects/destroy', 'ProjectController@massDestroy')->name('projects.massDestroy');
-    Route::post('projects/media', 'ProjectController@storeMedia')->name('projects.storeMedia');
-    Route::post('projects/ckmedia', 'ProjectController@storeCKEditorImages')->name('projects.storeCKEditorImages');
     Route::resource('projects', 'ProjectController');
 
     // Bank
@@ -85,9 +83,10 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::delete('payments/destroy', 'PaymentController@massDestroy')->name('payments.massDestroy');
     Route::resource('payments', 'PaymentController');
 
+    // DONE
     // Contact Us
-    Route::delete('contactuses/destroy', 'ContactUsController@massDestroy')->name('contactuses.massDestroy');
-    Route::resource('contactuses', 'ContactUsController', ['except' => ['edit', 'update']]);
+    Route::get('contact-us', 'ContactUsController@create')->name('contact-us.create');
+    Route::post('contact-us', 'ContactUsController@store')->name('contact-us.store');
 
     // Page
     Route::delete('pages/destroy', 'PageController@massDestroy')->name('pages.massDestroy');
