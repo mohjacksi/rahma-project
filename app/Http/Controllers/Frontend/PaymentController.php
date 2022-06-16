@@ -18,7 +18,6 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('payment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $payments = Payment::with(['project'])->get();
 
