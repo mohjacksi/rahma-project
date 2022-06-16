@@ -57,19 +57,18 @@
 
                         </div>
                         <div class="donation-option">
-                            <form action="" method="post" name="donation-options">
+                            <form action="{{ route('frontend.payments.index') }}" method="get">
                                 <div class="row">
                                     @foreach ($categories as $category)
                                         <div class="col-6">
                                             <div class="donation-options-item">
-                                                <input type="radio" name="donation-options-item"
-                                                    value="{{ $category->id }}" id="category_id">
+                                                <input type="radio" name="category" value="{{ $category->id }}"
+                                                    id="category_id">
                                                 <label for="donation1">{{ $category->name }}</label>
                                             </div>
 
                                         </div>
                                     @endforeach
-
                                 </div>
                                 <div class="col-12">
                                     <div class="donation-number">
@@ -80,25 +79,23 @@
                                             </div>
                                             <div class="col-sm-6 col-12 ">
                                                 <div class="d-flex custom-g-form justify-content-end">
-                                                    <form method="post" class="d-flex custom-g-form">
-                                                        <input class="form-control me-2 " name="number-of-donation"
-                                                            type="number" placeholder="0 " id="donation55">
-                                                        <button class="btn btn-outline-success" type="submit">
+                                                    <div method="post" class="d-flex custom-g-form">
+                                                        <input class="form-control me-2 " name="amount" type="number"
+                                                            placeholder="0 " id="amount">
+                                                        <button class="btn btn-outline-success">
                                                             د.ع
                                                         </button>
-                                                    </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
-
-                                    <button class="btn custom-btn w-100 mt-2">التبرع السريع</button>
-
+                                    <button type="submit" class="btn custom-btn w-100 mt-4">تبرع الآن</a>
                                 </div>
+                            </form>
                         </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -163,20 +160,12 @@
                                                         <span>{{ $project->remain }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="custom-card-donation">
-                                                    <label for="donation55">قم بإدخال التبرع </label>
-                                                    <form method="post" class="d-flex custom-g-form">
-                                                        <input class="form-control me-2 " name="number-of-donation"
-                                                            type="number" placeholder="0 " id="donation55">
-                                                        <button class="btn btn-outline-success" type="submit">
-                                                            د.ع
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary qu-btn">التبرع السريع
-                                            </button>
 
+                                            </div>
+                                            <a href="{{ route('frontend.projects.show', $project->id) }}">
+                                                <button type="submit" class="btn btn-primary qu-btn">تبرع الآن
+                                                </button>
+                                            </a>
 
                                         </div>
                                     </div>

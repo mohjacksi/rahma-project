@@ -4,6 +4,25 @@
     <section class="project-item  payment-2 py">
         <div class="container">
             <div class="col-12">
+                @if(null !== Session::get('done'))
+                <div class="row">
+                    <div class="col-lg-7 col-12 order-1">
+                        <div class="donor-message">
+                            <h3 class="title">
+                                <span>
+                                    متبرعنا الكريم
+                                </span>
+                                <br>
+                                <br>
+                                تمت عملية إدخال البيانات بشكل كامل<br> سوف نقوم بالتواصل معك في اقرب وقت
+                            </h3>
+                            <p>
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                @else
                 <div class="row">
                     <div class="col-lg-7 col-12 order-1">
                         <div class="donor-message">
@@ -92,6 +111,7 @@
                                             @method('POST')
                                             @csrf
                                             <input type="hidden" name="amount" id="amount" value="{{ $amount ?? '00' }}">
+                                            <input type="hidden" name="category_id" id="category_id" value="{{ $category->id ?? '00' }}">
                                             <input type="hidden" name="project_id" id="project_id"
                                                 value="{{ $project?->id }}">
                                             <input type="hidden" name="" id="" value="">
@@ -196,6 +216,16 @@
                                         <span class="result"> {{ $amount ?? '0' }} د.ع</span>
                                     </div>
                                 @endif
+                                @if (isset($category))
+                                    <div class="item">
+                                        <span class="add">الصنف </span>
+                                        <span class="result"> {{ $category->name }} </span>
+                                    </div>
+                                    <div class="item">
+                                        <span class="add"> قيمة التبرع </span>
+                                        <span class="result"> {{ $amount ?? '0' }} د.ع</span>
+                                    </div>
+                                @endif
                                 @if (isset($amount))
                                     <div class="item active">
                                         <span class="add"> الإجمالى </span>
@@ -206,9 +236,8 @@
                         </div>
 
                     </div>
-
-
                 </div>
+                @endif
             </div>
         </div>
     </section>

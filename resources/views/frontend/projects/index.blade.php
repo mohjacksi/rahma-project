@@ -77,19 +77,11 @@
                                                         <span>{{ $project->remain }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="custom-card-donation">
-                                                    <label for="donation55">قم بإدخال التبرع </label>
-                                                    <form method="post" class="d-flex custom-g-form">
-                                                        <input class="form-control me-2 " name="number-of-donation"
-                                                            type="number" placeholder="0 " id="donation55">
-                                                        <button class="btn btn-outline-success" type="submit">
-                                                            د.ع
-                                                        </button>
-                                                    </form>
-                                                </div>
                                             </div>
-                                            <button type="submit" class="btn btn-primary qu-btn">التبرع السريع
-                                            </button>
+                                            <a href="{{ route('frontend.projects.show', $project->id) }}">
+                                                <button type="submit" class="btn btn-primary qu-btn">تبرع الآن
+                                                </button>
+                                            </a>
 
 
                                         </div>

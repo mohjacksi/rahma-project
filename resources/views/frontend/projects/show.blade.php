@@ -25,39 +25,35 @@
                             <div class="swiper project-slider">
                                 <div class="swiper-wrapper">
 
-                                    <div class="swiper-slide">
+                                    @if (isset($project->youtube))
+                                        <div class="swiper-slide">
+                                            <a class="slide-item">
 
-                                        <a class="slide-item">
-
-                                            <iframe class="d-none" src="https://www.youtube.com/embed/aRtLSPbrsWU"
+                                                {{-- <iframe class="d-none" src="{{$project->youtube}}"
                                                 title="YouTube video player" frameborder="0"
                                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                allowfullscreen></iframe>
+                                                allowfullscreen></iframe> --}}
+                                                <iframe width="420" height="315" src="{{ $project->youtube }}"
+                                                    frameborder="0" allowfullscreen></iframe>
 
-                                            <video controls id="welcomeVideo">
+                                                {{-- <video controls id="welcomeVideo">
                                                 <source src="/images/video/header.mp4" type="video/mp4">
-                                            </video>
+                                            </video> --}}
 
 
-                                        </a>
+                                            </a>
+                                        </div>
+                                    @endif
+                                    @foreach ($project->images as $key => $media)
+                                        <div class="swiper-slide">
 
-                                    </div>
-                                    <div class="swiper-slide">
+                                            <a class="slide-item" href="{{ $media->getUrl() }}" data-toggle="lightbox"
+                                                data-gallery="example-gallery">
+                                                <img src="{{ $media->getUrl() }}" class="img-fluid w-100 d-block">
+                                            </a>
 
-                                        <a class="slide-item" href="./images/2.jpg" data-toggle="lightbox"
-                                            data-gallery="example-gallery">
-                                            <img src="./images/2.jpg" class="img-fluid w-100 d-block">
-                                        </a>
-
-                                    </div>
-                                    <div class="swiper-slide">
-
-                                        <a class="slide-item" href="./images/3.jpg" data-toggle="lightbox"
-                                            data-gallery="example-gallery">
-                                            <img src="./images/3.jpg" class="img-fluid w-100 d-block">
-                                        </a>
-
-                                    </div>
+                                        </div>
+                                    @endforeach
 
                                 </div>
                                 <div class="swiper-button-next"></div>
@@ -74,14 +70,14 @@
                                 {{ $project->name }}
                             </h3>
                             @php
-                                $prec = $project->paid / $project->value * 100;
+                                $prec = ($project->paid / $project->value) * 100;
 
                             @endphp
                             <div class="relative position-relative" style="height: 40px">
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: {{$prec}}%;" aria-valuemin="0"
-                                        aria-valuemax="100">
-                                        <span style="right: calc({{$prec}}% - 23px);">{{$prec}}%</span>
+                                    <div class="progress-bar" role="progressbar" style="width: {{ $prec }}%;"
+                                        aria-valuemin="0" aria-valuemax="100">
+                                        <span style="right: calc({{ $prec }}% - 23px);">{{ $prec }}%</span>
                                     </div>
                                 </div>
                             </div>
@@ -100,22 +96,25 @@
                                     <span class="sa">{{ $project->remain }} د.ع</span>
                                 </div>
                             </div>
-                            <div class="custom-card-donation mb-0">
-                                <label for="donation55">قم بإدخال التبرع </label>
+                            <form action="{{route('frontend.payments.index')}}" method="get">
+                                <div class="custom-card-donation mb-0">
+                                    <label for="donation55">قم بإدخال التبرع </label>
 
-                                <div class="d-flex custom-g-form justify-content-end">
-                                    <form method="post" class="d-flex">
-                                        <input class="form-control me-2 " name="number-of-donation"
-                                            type="number" placeholder="0 " id="donation55">
-                                        <button class="btn btn-outline-success" type="submit">
-                                            د.ع
-                                        </button>
-                                    </form>
+                                    <div class="d-flex custom-g-form justify-content-end">
+                                        <div method="post" class="d-flex">
+                                            <input class="form-control me-2 " name="amount" type="number"
+                                                placeholder="0 " id="amount">
+                                            <button class="btn btn-outline-success" type="submit">
+                                                د.ع
+                                            </button>
+                                            <input type="hidden" name="project" id="project" value="{{$project?->id}}">
+                                        </div>
 
 
+                                    </div>
                                 </div>
-                            </div>
-                            <a class="btn custom-btn w-100 mt-4" href="payment-2.html">التبرع السريع</a>
+                                <button type="submit" class="btn custom-btn w-100 mt-4">تبرع الآن</a>
+                            </form>
                         </div>
 
                     </div>
@@ -131,8 +130,8 @@
                                         data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
                                         aria-selected="true">تفاصيل المشروع</button>
                                     <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
-                                        data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
-                                        aria-selected="false">أهمية المشروع</button>
+                                        data-bs-target="#nav-profile" type="button" role="tab"
+                                        aria-controls="nav-profile" aria-selected="false">أهمية المشروع</button>
                                 </div>
                             </div>
 
@@ -211,4 +210,34 @@
         </div>
     </section>
     <!-- End Donation projects -->
+@endsection
+
+@section('scripts')
+    <script src="./js/jquery.3.6.0.min.js"></script>
+    <script src="./js/all.min.js"></script>
+
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/Lightbox.js"></script>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+
+    <script src="./js/main.js"></script>
+
+
+    <script>
+        var swiper = new Swiper(".project-slider", {
+
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true
+            },
+            navigation: {
+                nextEl: ".project-slider .swiper-button-next",
+                prevEl: ".project-slider .swiper-button-prev",
+            },
+
+
+        });
+    </script>
 @endsection

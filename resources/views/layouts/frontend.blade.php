@@ -61,14 +61,14 @@
                         <div class="custom-title">السياسات</div>
                         <div class="row">
                             <div class="col-lg-6 col-12">
-                                <a href="info-page.html">
+                                <a href="#">
                                     <div class="custom-footer-link-item">
                                         سياسة الخصوصية
                                     </div>
                                 </a>
                             </div>
                             <div class="col-lg-6 col-12">
-                                <a href="info-page.html">
+                                <a href="#">
                                     <div class="custom-footer-link-item">
                                         سياسة وضوابط التبرع
                                     </div>

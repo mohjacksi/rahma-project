@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroyPaymentRequest;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use App\Models\Bank;
+use App\Models\DonationCategory;
 use App\Models\Payment;
 use App\Models\Project;
 use Gate;
@@ -27,7 +28,9 @@ class PaymentController extends Controller
 
         $amount = request()->amount;
 
-        return view('frontend.payments.index', compact('payments','banks','project', 'amount'));
+        $category = DonationCategory::find(request()->category);
+
+        return view('frontend.payments.index', compact('payments','banks','project', 'amount','category'));
     }
 
     public function create()
@@ -43,7 +46,8 @@ class PaymentController extends Controller
     {
         $payment = Payment::create($request->all());
 
-        return redirect()->route('frontend.payments.index');
+
+        return redirect()->route('frontend.payments.index')->with( ['done' => true] );
     }
 
     public function edit(Payment $payment)
